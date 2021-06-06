@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.6.7/rxjs.umd.min.js"></script>
+    <title>RxJS</title>
+  </head>
+  <body>
+    <script>
+      const button = document.querySelector("button");
+      const { Observable, fromEvent } = rxjs;
+    </script>
+    <button id="btn">click</button>
+    <input type="text" id="input" />
+    <script>
+      fromEvent(document.querySelector('#refreshButton'), 'click')
+        .subscribe(data=>{
+          refresh()
+        })
+
+      function refresh() {
+        from(fetch("https://randomuser.me/api/?results=10")).subscribe(
+          async (res) => {
+            let data = await res.json();
+            const fnames = document.querySelectorAll('.name');
+            const locations = document.querySelectorAll('.location');
+
+            data.results.forEach((item, i)={
+              fnames[i].innerHTML = data.results[i].name;
+              locations[i].innerHTML = data.results[i].locations;
+
+            })
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
